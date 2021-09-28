@@ -1,0 +1,153 @@
+
+========= SLHA file input =========
+Initial file  "/Users/rafalmaselek/Projects/g-2/slha_files/BLR_tb10/BLR_tb10_150_950.spec"
+Warnings from spectrum calculator:
+ .....none
+
+Dark matter candidate is '~o1' with spin=1/2  mass=7.61E+01
+
+~o1 = -1.000*bino +0.000*wino -0.007*higgsino1 +0.001*higgsino2
+
+=== MASSES OF HIGGS AND SUSY PARTICLES: ===
+Higgs masses and widths
+      h   125.00 1.61E-03
+      H  10030.00 1.29E+04
+     H3  10010.00 2.14E+03
+     H+  10050.00 2.16E+03
+
+Masses of odd sector Particles:
+~o1      : MNE1    =  76.066 || ~l1      : MSl1    =  96.065 || ~ne      : MSne    = 135.738 
+~nm      : MSnm    = 135.738 || ~nl      : MSnl    = 135.738 || ~eL      : MSeL    = 157.168 
+~mL      : MSmL    = 157.168 || ~eR      : MSeR    = 950.986 || ~mR      : MSmR    = 950.986 
+~l2      : MSl2    = 959.090 || ~1+      : MC1     = 6461.026 || ~o2      : MNE2    = 6461.039 
+~o3      : MNE3    = 6462.232 || ~uL      : MSuL    = 9000.000 || ~uR      : MSuR    = 9000.000 
+~dL      : MSdL    = 9000.000 || ~dR      : MSdR    = 9000.000 || ~cL      : MScL    = 9000.000 
+~cR      : MScR    = 9000.000 || ~sL      : MSsL    = 9000.000 || ~sR      : MSsR    = 9000.000 
+~t1      : MSt1    = 9100.000 || ~b1      : MSb1    = 9100.000 || ~g       : MSG     = 9900.000 
+~o4      : MNE4    = 10001.252 || ~2+      : MC2     = 10001.252 || ~t2      : MSt2    = 10100.000 
+~b2      : MSb2    = 10100.000 || 
+
+
+==== Physical Constraints: =====
+deltartho=NAN
+gmuon=1.14E-09
+bsgnlo=3.25E-04 ( SM 3.25E-04 )
+bsmumu=3.03E-09
+btaunu=1.00E+00
+dtaunu=5.17E-02  dmunu=5.33E-03
+Rl23=1.000E+00
+MassLimits OK
+HiggsBounds(4)
+  id= 308  result = 0  obsratio=1.43E+00  channel= (p p)->h1 ->Z Z-> l l l l (low mass) where h1  is SM-like (CMS-PAS-HIG-13-002) 
+  id= 290  result = 0  obsratio=1.58E+00  channel= (p p)->h1 ->Z Z-> l l l l where h1  is SM-like (ATLAS-CONF-2013-013) 
+  id= 230  result = 0  obsratio=2.44E+00  channel= (p p)->h1 +...->W W +... where h1  is SM-like (CMS-PAS-HIG-13-003) 
+HiggsSignals(2.3.0)
+  Nobservables=87 chi^2 = 1.23E+03 pval= 0.00E+00
+LILITH(DB19.09):  -2*log(L): 758.21; -2*log(L_reference): 0.00; ndf: 66; p-value: 0.00E+00 
+
+==== Calculation of relic density =====
+Xf=2.25e+01 Omega=4.69e-01
+# Channels which contribute to 1/(omega) more than 1%.
+# Relative contributions in % are displayed
+   70% ~o1 ~o1 ->l L 
+    5% ~o1 ~o1 ->ne Ne 
+    5% ~o1 ~o1 ->nm Nm 
+    5% ~o1 ~o1 ->nl Nl 
+    4% ~o1 ~o1 ->e E 
+    4% ~o1 ~o1 ->m M 
+    4% ~o1 ~l1 ->l h 
+    2% ~o1 ~l1 ->W- nl 
+
+==== Calculation of CDM-nucleons amplitudes  =====
+~o1-nucleon micrOMEGAs amplitudes:
+proton:  SI  -7.416E-12  SD  -1.146E-10
+neutron: SI  -7.303E-12  SD  1.738E-10
+
+==== ~o1-nucleon cross sections[pb] ====
+ proton  SI 2.346E-14  SD 1.682E-11
+ neutron SI 2.275E-14  SD 3.865E-11
+Not excluded by DD experiments  at 90% level 
+
+===== Direct detection exclusion:======
+Not excluded by DD experiments  at 90% level 
+
+===============Neutrino Telescope=======  for  Sun
+ E>1.0E+00 GeV neutrino/anti-neutrino fluxes   3.12E+05/4.41E+05 [1/Year/km^2]
+IceCube22 exclusion confidence level = 8.68E-07%
+ E>1.0E+00 GeV Upward muon flux    3.70E-04 [1/Year/km^2]
+ E>1.0E+00 GeV Contained muon flux 5.08E-03 [1/Year/km^3]
+
+================= Decays ==============
+
+h :   total width=1.61E-03 
+ Branching  Partial width   Channel
+ 5.366E-01  8.615E-04 GeV   h -> W+,W-
+ 2.214E-01  3.555E-04 GeV   h -> G,G
+ 8.404E-02  1.349E-04 GeV   h -> c,C
+ 7.661E-02  1.230E-04 GeV   h -> b,B
+ 6.516E-02  1.046E-04 GeV   h -> Z,Z
+ 8.950E-03  1.437E-05 GeV   h -> l,L
+ 6.836E-03  1.098E-05 GeV   h -> A,A
+ 3.926E-04  6.304E-07 GeV   h -> u,U
+ 2.065E-05  3.315E-08 GeV   h -> d,D
+ 2.065E-05  3.315E-08 GeV   h -> s,S
+
+H3 :   total width=2.14E+03 
+ Branching  Partial width   Channel
+ 9.909E-01  2.116E+03 GeV   H3 -> Z,h
+ 4.505E-03  9.621E+00 GeV   H3 -> b,B
+ 1.711E-03  3.654E+00 GeV   H3 -> t,T
+ 1.218E-03  2.602E+00 GeV   H3 -> ~o1,~o2
+ 9.049E-04  1.933E+00 GeV   H3 -> l,L
+ 7.877E-04  1.683E+00 GeV   H3 -> ~o1,~o3
+ 2.169E-06  4.632E-03 GeV   H3 -> d,D
+ 2.169E-06  4.632E-03 GeV   H3 -> s,S
+ 2.035E-06  4.347E-03 GeV   H3 -> ~L1,~l2
+ 2.035E-06  4.347E-03 GeV   H3 -> ~l1,~L2
+ 5.140E-07  1.098E-03 GeV   H3 -> ~o1,~o1
+ 4.936E-07  1.054E-03 GeV   H3 -> G,G
+ 2.661E-08  5.684E-05 GeV   H3 -> c,C
+ 8.746E-10  1.868E-06 GeV   H3 -> A,A
+ 2.341E-10  5.000E-07 GeV   H3 -> u,U
+
+H :   total width=1.29E+04 
+ Branching  Partial width   Channel
+ 7.511E-01  9.687E+03 GeV   H -> h,h
+ 1.651E-01  2.130E+03 GeV   H -> W+,W-
+ 8.256E-02  1.065E+03 GeV   H -> Z,Z
+ 7.549E-04  9.736E+00 GeV   H -> b,B
+ 1.763E-04  2.274E+00 GeV   H -> ~o1,~o3
+ 1.576E-04  2.032E+00 GeV   H -> ~o1,~o2
+ 1.517E-04  1.957E+00 GeV   H -> l,L
+ 1.141E-05  1.471E-01 GeV   H -> t,T
+ 3.635E-07  4.689E-03 GeV   H -> d,D
+ 3.635E-07  4.689E-03 GeV   H -> s,S
+ 2.157E-07  2.783E-03 GeV   H -> A,A
+ 8.382E-08  1.081E-03 GeV   H -> ~o1,~o1
+ 1.276E-08  1.645E-04 GeV   H -> ~L1,~l2
+ 1.276E-08  1.645E-04 GeV   H -> ~l1,~L2
+ 2.534E-09  3.268E-05 GeV   H -> ~ne,~Ne
+ 2.534E-09  3.268E-05 GeV   H -> ~nm,~Nm
+ 2.534E-09  3.268E-05 GeV   H -> ~nl,~Nl
+ 2.446E-09  3.155E-05 GeV   H -> ~l2,~L2
+ 7.583E-10  9.781E-06 GeV   H -> ~eL,~EL
+ 7.583E-10  9.781E-06 GeV   H -> ~mL,~ML
+ 6.147E-10  7.928E-06 GeV   H -> G,G
+ 5.106E-10  6.585E-06 GeV   H -> ~eR,~ER
+ 5.106E-10  6.585E-06 GeV   H -> ~mR,~MR
+ 1.776E-10  2.290E-06 GeV   H -> c,C
+ 3.619E-11  4.668E-07 GeV   H -> ~l1,~L1
+ 1.562E-12  2.015E-08 GeV   H -> u,U
+
+~1+ :   total width=5.46E+00 
+ Branching  Partial width   Channel
+ 7.445E-01  4.069E+00 GeV   ~1+ -> W+,~o1
+ 1.276E-01  6.975E-01 GeV   ~1+ -> L,~nl
+ 1.152E-01  6.295E-01 GeV   ~1+ -> nl,~L2
+ 6.176E-03  3.375E-02 GeV   ~1+ -> nl,~L1
+ 2.162E-03  1.182E-02 GeV   ~1+ -> E,~ne
+ 2.162E-03  1.182E-02 GeV   ~1+ -> M,~nm
+ 1.062E-03  5.803E-03 GeV   ~1+ -> ne,~EL
+ 1.062E-03  5.803E-03 GeV   ~1+ -> nm,~ML
+Example of 1->3 decay:
+width(~o2->~o1,e,E)=6.501741e-02

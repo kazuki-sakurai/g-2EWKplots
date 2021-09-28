@@ -222,7 +222,7 @@ def plot(var, mode, MODEL, outfolder, SHOW_LHC, SHOW_DM_proj):
         ylab = r'$-\mu \,\,[\rm GeV]$'
         dec_st = r'$m_{\tilde l_L} = M_2 = 10\,{\rm TeV}$'
         mL_st = r'$m_{\tilde l_R} = {\rm min}(M_1, |\mu|)+20\mathrm{ GeV}$'
-    elif "BLR_mdif20" == mode:
+    elif "BLR" in mode:
         xmin, xmax = 150, 600
         ymin, ymax = 120, 1200
         xlab = r'$M_{{\tilde l}_L} \,\,[\rm GeV]$'
@@ -635,6 +635,7 @@ def plot(var, mode, MODEL, outfolder, SHOW_LHC, SHOW_DM_proj):
     ax.set_xlim( xmin, xmax )
     ax.set_ylim( ymin, ymax )
     tb = 50.
+    if 'tb10' in mode: tb = 10
     A = 0
     tb_st = r'$\tan\beta={}$'.format(int(tb))
     A_st = r'$A = 0$'
