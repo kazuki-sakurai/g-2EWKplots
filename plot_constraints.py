@@ -629,7 +629,7 @@ def plot(var, mode, MODEL, outfolder, SHOW_LHC, SHOW_DM_proj):
                 # plt.legend(handles=handles, loc='lower right',)
 
 
-    #
+    ##
     # Set properties of the plot
     #
     ax.set_xlim( xmin, xmax )
