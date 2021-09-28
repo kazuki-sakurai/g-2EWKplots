@@ -648,7 +648,7 @@ def plot(var, mode, MODEL, outfolder, SHOW_LHC, SHOW_DM_proj):
         title = mL_st +sp+ tb_st +sp+ A_st +sp+ dec_st
     elif '_mR' in mode:
         title = mu_st +sp+ tb_st +sp+ A_st +sp+ dec_st
-    elif mode in ('BLR_mdif20'):
+    elif 'BLR' in mode:
         title = m1_st +sp+ mu_st +sp+ tb_st +sp+ A_st + sp + dec_st
 
     
