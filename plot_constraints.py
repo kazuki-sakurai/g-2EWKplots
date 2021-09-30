@@ -539,8 +539,8 @@ def plot(var, mode, MODEL, outfolder, SHOW_LHC, SHOW_DM_proj):
 
             list_all = list_1 + list_2 + list_3 + list_4 + list_5 + list_6 + list_7
 
-            if False:
-            #for ana in list_all:
+            # if False:
+            for ana in list_all:
                 xar, yar, zar = x_ar[ana], y_ar[ana], r_ar[ana]
                 ax.tricontour(xar, yar, zar, [1], linewidths=(1.5), zorder=2)
 
@@ -556,8 +556,8 @@ def plot(var, mode, MODEL, outfolder, SHOW_LHC, SHOW_DM_proj):
             ana_dict['BHR_M1_mu'] = ['atlas_2106_09609', 'cms_sus_16_039']; cols = ['r', 'b', 'purple']
 
             ic = -1
-            #if False:
-            for ana in ana_dict[mode]:
+            if False:
+            # for ana in ana_dict[mode]:
                 ic += 1; col = cols[ic]
                 xar, yar, zar = x_ar[ana], y_ar[ana], r_ar[ana]
                 ax.tricontour(xar, yar, zar, [1], colors=(col), linewidths=(1.5), zorder=2)
@@ -565,8 +565,8 @@ def plot(var, mode, MODEL, outfolder, SHOW_LHC, SHOW_DM_proj):
 
             cols = ['r', 'b', 'g', 'purple', 'magenta']
             ic = -1
-            if False:
-            #for ana in list_1:
+            # if False:
+            for ana in list_1:
                 ic += 1; col = cols[ic]
                 xar, yar, zar = x_ar[ana], y_ar[ana], r_ar[ana]
                 ax.tricontour(xar, yar, zar, [1], colors=(col), linewidths=(1.5), zorder=2)
