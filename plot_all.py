@@ -7,12 +7,13 @@ from plot_constraints import readFile, plot
 outfolder = 'results'
 
 modes = ['BLR_mdif20',
-		#'BHL_M1_mL',
-		#'BHL_M1_mu',
-		#'BHR_M1_mR',
-		#'BHR_M1_mu',
-		#'WHL_M2_mL',
-		#'WHL_M2_mu',
+		'BHL_M1_mL',
+		'BHL_M1_mu',
+		'BHR_M1_mR',
+		'BHR_M1_mu',
+		'WHL_M2_mL',
+		'WHL_M2_mu',
+		'BLR_tb10',
 		]
 
 #modes = ['BLR_mdif20']

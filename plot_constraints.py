@@ -580,6 +580,7 @@ def plot(var, mode, MODEL, outfolder, SHOW_LHC, SHOW_DM_proj):
             ana_dict['BHL_M1_mu'] = ['atlas_2106_09609', 'cms_sus_16_039', 'cms_exo_14_014']
             #ana_dict['BLR_mdif20'] = ['atlas_2106_09609', 'cms_sus_16_039', 'atlas_2101_01629']
             ana_dict['BLR_mdif20'] = ['atlas_2106_09609', 'cms_sus_16_039']
+            ana_dict['BLR_tb10'] = ['atlas_2106_09609', 'cms_sus_16_039']
             ana_dict['BHR_M1_mR'] = ['cms_exo_14_014', 'cms_sus_16_039']
             ana_dict['BHR_M1_mu'] = ['atlas_2106_09609', 'cms_sus_16_039']
 
@@ -692,7 +693,7 @@ def plot(var, mode, MODEL, outfolder, SHOW_LHC, SHOW_DM_proj):
         ax.xaxis.set_major_locator(ticker.LogLocator(base=10.0, numticks=15))
         ax.yaxis.set_major_locator(ticker.LogLocator(base=10.0, numticks=15))
 
-    pdfname = '{}/{}_{}.pdf'.format(outfolder, MODEL, mode)    
+    pdfname = '{}/{}_{}_all.pdf'.format(outfolder, MODEL, mode)    
     labels = [ r'$|a_\mu-a_\mu^{exp}| < 1\sigma$', r'$|a_\mu-a_\mu^{exp}| < 2\sigma$']
     fig.savefig(pdfname, bbox_inches = 'tight', pad_inches = 0.1)
     print(pdfname)
