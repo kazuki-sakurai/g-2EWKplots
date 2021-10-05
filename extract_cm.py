@@ -3,16 +3,19 @@
 import sys, os
 import numpy as np
 
-model = 'RPV'
+model = 'GMSB_stau'
 # mode = 'WHL_M2_mu'
 # rootS = '13'
-modes = [   'BLR_mdif20',
-        'BHL_M1_mL',
+modes = [  
+        # 'BLR_mdif20',
+        # 'BHL_M1_mL',
         'BHL_M1_mu',
-        'BHR_M1_mR',
+        # 'BHR_M1_mR',
         'BHR_M1_mu',
-        'WHL_M2_mL',
+        # 'WHL_M2_mL',
         'WHL_M2_mu',
+	'BLR_tb10',
+        'BLR_tb50'
         ]
 energies = ['13', '8']
 
@@ -27,8 +30,12 @@ for rootS in energies:
             #if ic > 2: break
             x, y = int(x), int(y)
             model_dm = model
-            if model == 'RPV': model_dm = 'MSSM'
-            tag = '{model}-{mode}_{x}_{y}_{rootS}TeV'.format(model=model_dm, mode=mode, x=x, y=y, rootS=rootS)
+            if model == 'RPV': 
+                model_dm = 'MSSM'
+            if model == "GMSB_stau":
+                tag = '{model}-{mode}_stau_{x}_{y}_{rootS}TeV'.format(model=model_dm, mode=mode, x=x, y=y, rootS=rootS)
+            else:
+                tag = '{model}-{mode}_{x}_{y}_{rootS}TeV'.format(model=model_dm, mode=mode, x=x, y=y, rootS=rootS)
             infile = '/mnt/big/g-2_project/RESULTS/{model}/{tag}/evaluation/total_results.txt'.format(model=model, tag=tag)
             if not os.path.isfile(infile):
                 print(infile, ' does not exist')
