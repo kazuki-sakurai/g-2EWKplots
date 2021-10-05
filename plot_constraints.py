@@ -530,7 +530,7 @@ def plot(var, mode, MODEL, outfolder, SHOW_LHC, SHOW_DM_proj):
 
             ana_list = cmres.keys()
 
-            #print(ana_list)
+            # print(ana_list)
             #exit()
 
             ## 13 TeV analyses
@@ -555,15 +555,20 @@ def plot(var, mode, MODEL, outfolder, SHOW_LHC, SHOW_DM_proj):
 
             list8_all = list8_1 + list8_2 + list8_3 + list8_4 + list8_5 + list8_6 + list8_7
              
-
+            print(list(set(ana_list) - set(list_all+list8_all)))
             #if False:
-            for ana in list_all:
-                xar, yar, zar = x_ar[ana], y_ar[ana], r_ar[ana]
-                ax.tricontour(xar, yar, zar, [1], linewidths=(1.5), zorder=2, colors=('magenta'))
-            for ana in list8_all:
-                xar, yar, zar = x_ar[ana], y_ar[ana], r_ar[ana]
-                ax.tricontour(xar, yar, zar, [1], linewidths=(1.5), zorder=2, colors=('cyan'))
-
+            try:
+                for ana in list_all:
+                    xar, yar, zar = x_ar[ana], y_ar[ana], r_ar[ana]
+                    ax.tricontour(xar, yar, zar, [1], linewidths=(1.5), zorder=2, colors=('magenta'))
+                for ana in list8_all:
+                    xar, yar, zar = x_ar[ana], y_ar[ana], r_ar[ana]
+                    ax.tricontour(xar, yar, zar, [1], linewidths=(1.5), zorder=2, colors=('cyan'))
+            except:
+                print(ana)
+                print(ana in x_ar.keys())
+                print(np.array(x_ar[ana]).shape, np.array(y_ar[ana]).shape, np.array(r_ar[ana]).shape)
+                exit(1)
 
             ana_dict = {}
             cols = ['r', 'b', 'purple']
@@ -580,7 +585,7 @@ def plot(var, mode, MODEL, outfolder, SHOW_LHC, SHOW_DM_proj):
             ana_dict['BHL_M1_mu'] = ['atlas_2106_09609', 'cms_sus_16_039', 'cms_exo_14_014']
             #ana_dict['BLR_mdif20'] = ['atlas_2106_09609', 'cms_sus_16_039', 'atlas_2101_01629']
             ana_dict['BLR_mdif20'] = ['atlas_2106_09609', 'cms_sus_16_039']
-            ana_dict['BLR_tb10'] = ['atlas_2106_09609', 'cms_sus_16_039']
+            ana_dict['BLR_tb10'] = ['cms_exo_14_014']
             ana_dict['BHR_M1_mR'] = ['cms_exo_14_014', 'cms_sus_16_039']
             ana_dict['BHR_M1_mu'] = ['atlas_2106_09609', 'cms_sus_16_039']
 
