@@ -489,7 +489,7 @@ def plot(var, mode, MODEL, outfolder, SHOW_LHC, SHOW_DM_proj):
 
         #######################################
         # PLOT CHECKMATE CONSTRAINTS
-        PLOT_CLEAN = True
+        PLOT_CLEAN = False
         #######################################
         if MODEL == 'RPV': #TODO: INCLUDE GMSB WHEN CONSTRAINTS ARE CALCULATED
 
