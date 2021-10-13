@@ -1,0 +1,30 @@
+GMSB_stau-BHL_M1_mu_stau_8TeV
+To do:6 done: 961
+progress = 99.38%
+GMSB_stau-BHL_M1_mu_stau_13TeV
+To do:1 done: 961
+progress = 99.9%
+GMSB_stau-BLR_tb50_stau_8TeV
+To do:4 done: 855
+progress = 99.53%
+GMSB_stau-WHL_M2_mu_stau_13TeV
+To do:9 done: 961
+progress = 99.06%
+GMSB_stau-WHL_M2_mu_stau_8TeV
+To do:38 done: 961
+progress = 96.05%
+GMSB_stau-BHR_M1_mu_stau_8TeV
+To do:2 done: 961
+progress = 99.79%
+GMSB_stau-BLR_tb10_stau_13TeV
+To do:0 done: 855
+progress = 100.0%
+GMSB_stau-BHR_M1_mu_stau_13TeV
+To do:223 done: 961
+progress = 76.8%
+GMSB_stau-BLR_tb50_stau_13TeV
+To do:0 done: 855
+progress = 100.0%
+GMSB_stau-BLR_tb10_stau_8TeV
+To do:1 done: 855
+progress = 99.88%
