@@ -3,17 +3,18 @@
 import sys, os
 import numpy as np
 
-model = 'GMSB_stau'
+model = 'RPV'
 # mode = 'WHL_M2_mu'
 # rootS = '13'
 modes = [  
-        'BLR_mdif20',
-        'BHL_M1_mL',
-        'BHL_M1_mu',
-        'BHR_M1_mR',
-        'BHR_M1_mu',
-        'WHL_M2_mL',
-        'WHL_M2_mu',
+        # 'BLR_mdif20',
+        # 'BHL_M1_mL',
+        # 'BHL_M1_mu',
+        # 'BHR_M1_mR',
+        # 'BHR_M1_mu',
+        # 'WHL_M2_mL',
+        # 'WHL_M2_mu',
+        # 'WHL_M2_mu_2',
     	'BLR_tb10',
         'BLR_tb50'
         ]
@@ -21,8 +22,10 @@ energies = ['13', '8']
 
 for rootS in energies:
     for mode in modes:
-        grid = np.loadtxt('../grids/{}.grid'.format(mode))
-
+        if model == 'GMSB_stau':
+            grid = np.loadtxt('../grids_GMSB_stau/{}.grid'.format(mode))
+        else:
+            grid = np.loadtxt('../grids/{}.grid'.format(mode))
         ic = 0
         result = {}
         for x, y in grid:
@@ -36,7 +39,14 @@ for rootS in energies:
                 tag = '{model}-{mode}_stau_{x}_{y}_{rootS}TeV'.format(model=model_dm, mode=mode, x=x, y=y, rootS=rootS)
             else:
                 tag = '{model}-{mode}_{x}_{y}_{rootS}TeV'.format(model=model_dm, mode=mode, x=x, y=y, rootS=rootS)
-            infile = '/mnt/big/g-2_project/RESULTS/{model}/{tag}/evaluation/total_results.txt'.format(model=model, tag=tag)
+            
+            
+            if mode == 'WHL_M2_mu_2':
+                tag = 'GMSB_stau-WHL_M2_mu_stau_2_{x}_{y}_{rootS}TeV'.format(x=x, y=y, rootS=rootS)
+                infile = '/home/rmaselek/Documents/g-2_checkmate/output/{model}/{tag}/evaluation/total_results.txt'.format(model=model, tag=tag)
+            else:
+                infile = '/mnt/big/g-2_project/RESULTS/{model}/{tag}/evaluation/total_results.txt'.format(model=model, tag=tag)
+
             if not os.path.isfile(infile):
                 print(infile, ' does not exist')
                 continue
@@ -66,9 +76,9 @@ for rootS in energies:
             for ana, data in res.items():
                 sr_best_exp, r_best_exp = '-', 0
                 for sr, r in data.items():
-                    if r['exp'] > r_best:
+                    if r['exp'] > r_best_exp:
                         sr_best_exp, r_best_exp = sr, r['exp']
-                    sr_best_obs = r[sr_best_exp]
+                    r_best_obs = r['obs']
                 outsting = '{}  {}  {}  {}  {}'.format(x, y, ana, sr_best_exp, r_best_obs, r_best_exp)
                 fout.write(outsting + '\n')
 
