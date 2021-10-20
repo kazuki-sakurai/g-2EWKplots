@@ -44,8 +44,10 @@ for rootS in energies:
             if mode == 'WHL_M2_mu_2':
                 tag = 'GMSB_stau-WHL_M2_mu_stau_2_{x}_{y}_{rootS}TeV'.format(x=x, y=y, rootS=rootS)
                 infile = '/home/rmaselek/Documents/g-2_checkmate/output/{model}/{tag}/evaluation/total_results.txt'.format(model=model, tag=tag)
+                dir_Nsig = '/home/rmaselek/Documents/g-2_checkmate/output/{model}/{tag}/analysis'.format(model=model, tag=tag)
             else:
                 infile = '/mnt/big/g-2_project/RESULTS/{model}/{tag}/evaluation/total_results.txt'.format(model=model, tag=tag)
+                dir_Nsig = '/mnt/big/g-2_project/RESULTS/{model}/{tag}/analysis'.format(model=model, tag=tag)
 
             if not os.path.isfile(infile):
                 print(infile, ' does not exist')
@@ -79,7 +81,13 @@ for rootS in energies:
                     if r['exp'] > r_best_exp:
                         sr_best_exp, r_best_exp = sr, r['exp']
                     r_best_obs = r['obs']
-                outsting = '{}  {}  {}  {}  {}'.format(x, y, ana, sr_best_exp, r_best_obs, r_best_exp)
+                infile = 'process1_{}_signal.dat'.format(ana)
+                for line in open(dir_Nsig + '/' + infile):
+                    elems = line.split()
+                    if len(elems) > 2:
+                        if elems[0] == sr_beest:
+                            nsig_mc = int(elems[1])
+                outsting = '{}  {}  {}  {}  {}  {}'.format(x, y, ana, sr_best_exp, r_best_obs, r_best_exp, nsig_mc)
                 fout.write(outsting + '\n')
 
 
