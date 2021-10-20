@@ -66,7 +66,7 @@ def readFile(mode):
     Reads and parses SLHA model file for one of the parameter planes lsited below.
     """
     all_modes = ['WHL_M2_mL', 'WHL_M2_mu', 'BHL_M1_mL', 'BHL_M1_mu',
-    "BHR_M1_mR", 'BHR_M1_mu', 'BLR_M1_mR_1', 'BLR_M1_mR_2', 'BLR_B100', 'BLR_mdif20', 'BLR_tb10']
+    "BHR_M1_mR", 'BHR_M1_mu', 'BLR_M1_mR_1', 'BLR_M1_mR_2', 'BLR_B100', 'BLR_mdif20', 'BLR_tb10', 'BLR_tb50']
 
     folder = join('slha_files', mode)
     if mode not in all_modes:
@@ -440,24 +440,24 @@ def plot(var, mode, MODEL, outfolder, SHOW_LHC, SHOW_DM_proj):
             # ax.tricontourf(x, y, c4, lev, zorder=1, alpha=op, linewidths=1, linestyles='-', colors=(col),  antialiased=True)
 
 
-        if MODEL != 'RPV' and (not ( MODEL != 'MSSM' and mode in ('BLR_B100', 'BLR_mdif20') ) ):
-            print(f"{MODEL}")
-            lev = [1, infty]
-            if MODEL == 'MSSM':
-                print('[INFO] Opening '+'MSSM_'+mode+'.lhc')
-                x,y, c1,c2,c3, c4 = np.loadtxt('constraints/MSSM_'+mode+'.lhc').transpose()
-            elif MODEL=='GMSB':
-                print('[INFO] Opening '+'GMSB_'+mode+'.lhc')
-                x,y, c1,c2,c3, = np.loadtxt('constraints/GMSB_'+mode+'.lhc').transpose()
-                c4 = np.zeros(len(c3))
-            else:
-                raise ValueError("Unrecognised scenario!")
+        # if MODEL != 'RPV' and (not ( MODEL != 'MSSM' and mode in ('BLR_B100', 'BLR_mdif20') ) ):
+        #     print(f"{MODEL}")
+        #     lev = [1, infty]
+        #     if MODEL == 'MSSM':
+        #         print('[INFO] Opening '+'MSSM_'+mode+'.lhc')
+        #         x,y, c1,c2,c3, c4 = np.loadtxt('constraints/MSSM_'+mode+'.lhc').transpose()
+        #     elif MODEL=='GMSB':
+        #         print('[INFO] Opening '+'GMSB_'+mode+'.lhc')
+        #         x,y, c1,c2,c3, = np.loadtxt('constraints/GMSB_'+mode+'.lhc').transpose()
+        #         c4 = np.zeros(len(c3))
+        #     else:
+        #         raise ValueError("Unrecognised scenario!")
 
-            x = abs(x)
-            y = abs(y)
+        #     x = abs(x)
+        #     y = abs(y)
 
-            lev = [ 1., infty]
-            op = 0.4
+        #     lev = [ 1., infty]
+        #     op = 0.4
 
 
 
@@ -545,6 +545,122 @@ def plot(var, mode, MODEL, outfolder, SHOW_LHC, SHOW_DM_proj):
             list_all = list_1 + list_2 + list_3 + list_4 + list_5 + list_6 + list_7
 
             ## 8 TeV analyses
+            list8_1 = ['cms_exo_14_014', 'atlas_1308_2631', 'atlas_1402_7029', 'atlas_1403_4853', 'atlas_1403_5222']
+            list8_2 = ['atlas_1403_5294', 'atlas_1403_5294_CR', 'atlas_1404_2500', 'atlas_1405_7875', 'atlas_1407_0583']
+            list8_3 = ['atlas_1407_0608', 'atlas_1411_1559', 'atlas_1501_07110', 'atlas_1502_01518', 'atlas_1502_05686']
+            list8_4 = ['atlas_1503_03290', 'atlas_1506_08616', 'atlas_1507_05493', 'atlas_conf_2012_104', 'atlas_conf_2013_024']
+            list8_5 = ['atlas_conf_2013_049', 'atlas_conf_2013_061', 'atlas_conf_2013_089', 'atlas_conf_2015_004', 'atlas_higg_2013_03']
+            list8_6 = ['cms_1303_2985', 'cms_1408_3583', 'cms_1502_06031', 'cms_1504_03198', 'atlas_1308_1841']
+            list8_7 = ['cms_sus_13_016']
+
+            list8_all = list8_1 + list8_2 + list8_3 + list8_4 + list8_5 + list8_6 + list8_7
+             
+            print(list(set(ana_list) - set(list_all+list8_all)))
+            # atlas_2004_10894 is corrupted
+            #if False:
+            try:
+                for ana in list_all:
+                    xar, yar, zar = x_ar[ana], y_ar[ana], r_ar[ana]
+                    #ax.tricontour(xar, yar, zar, [1], linewidths=(1.5), zorder=2, colors=('magenta'))
+                for ana in list8_all:
+                    xar, yar, zar = x_ar[ana], y_ar[ana], r_ar[ana]
+                    ax.tricontour(xar, yar, zar, [1], linewidths=(1.5), zorder=2, colors=('cyan'))
+            except:
+                print(ana)
+                print(ana in x_ar.keys())
+                print(np.array(x_ar[ana]).shape, np.array(y_ar[ana]).shape, np.array(r_ar[ana]).shape)
+                exit(1)
+
+            # RPV
+            ana_dict = {}
+            cols = ['r', 'b', 'purple']
+            col_dic = {}
+            col_dic['atlas_2106_09609'] = 'r' 
+            col_dic['cms_sus_16_039'] = 'b' 
+            col_dic['atlas_conf_2019_040'] = 'green' 
+            col_dic['cms_exo_14_014'] = 'purple' 
+
+            # RPV
+            ana_dict['WHL_M2_mL'] = ['atlas_2106_09609', 'cms_sus_16_039']
+            ana_dict['WHL_M2_mu'] = ['atlas_2106_09609', 'cms_sus_16_039', 'atlas_conf_2019_040']
+            #ana_dict['WHL_M2_mu'] = ['atlas_2106_09609', 'cms_sus_16_039']
+            ana_dict['BHL_M1_mL'] = ['cms_exo_14_014', 'cms_sus_16_039']
+            ana_dict['BHL_M1_mu'] = ['atlas_2106_09609', 'cms_sus_16_039', 'cms_exo_14_014']
+            #ana_dict['BLR_mdif20'] = ['atlas_2106_09609', 'cms_sus_16_039', 'atlas_2101_01629']
+            ana_dict['BLR_mdif20'] = ['atlas_2106_09609', 'cms_sus_16_039']
+            ana_dict['BLR_tb10'] = ['cms_exo_14_014']
+            ana_dict['BHR_M1_mR'] = ['cms_exo_14_014', 'cms_sus_16_039']
+            ana_dict['BHR_M1_mu'] = ['atlas_2106_09609', 'cms_sus_16_039']
+
+            # RPV
+            ic = -1
+            #if False:
+            for ana in ana_dict[mode]:                
+                ic += 1; 
+                #col = cols[ic]
+                col = col_dic[ana]
+                print(mode, ana, col)
+                xar, yar, zar = x_ar[ana], y_ar[ana], r_ar[ana]
+                ax.tricontour(xar, yar, zar, [1], colors=(col), linewidths=(1.5), zorder=2)
+                ax.tricontourf(xar, yar, zar, [1, infty], colors=(col), alpha=0.3, zorder=1)
+
+            # RPV
+            cols = ['r', 'b', 'g', 'purple', 'magenta']
+            ic = -1
+            #if False:
+            for ana in list_1:
+                ic += 1; col = cols[ic]
+                xar, yar, zar = x_ar[ana], y_ar[ana], r_ar[ana]
+                ax.tricontour(xar, yar, zar, [1], colors=(col), linewidths=(1.5), zorder=2)
+                ax.tricontourf(xar, yar, zar, [1, infty], colors=(col), alpha=0.3, zorder=1)
+
+
+
+
+        if MODEL == 'GMSB_stau': #TODO: INCLUDE GMSB WHEN CONSTRAINTS ARE CALCULATED
+
+            # GMSB
+            ana_list = set([])
+            cmres, x_ar, y_ar, sr_ar, r_ar = {}, {}, {}, {}, {}
+            for rootS in ['8', '13']:
+
+                for line in open(f"constraints/GMSB_stau_{mode}_{rootS}TeV.cmres"):
+                    xdm, ydm, ana, sr, rval = line.split()
+                    x, y, rval = int(xdm), abs(int(ydm)), float(rval)
+
+                    if ana not in cmres.keys(): 
+                        cmres[ana] = {}
+                        x_ar[ana] = []
+                        y_ar[ana] = []
+                        sr_ar[ana] = []
+                        r_ar[ana] = []
+                    cmres[ana][(x, y)] = {}
+                    cmres[ana][(x, y)][sr] = sr
+                    cmres[ana][(x, y)][sr] = rval
+                    x_ar[ana].append(x)            
+                    y_ar[ana].append(y)            
+                    sr_ar[ana].append(sr)            
+                    r_ar[ana].append(rval)            
+
+            ana_list = cmres.keys()
+
+            # print(ana_list)
+            #exit()
+
+            # GMSB
+            ## 13 TeV analyses
+            list_1 = ['atlas_2106_09609', 'cms_sus_16_039', 'atlas_conf_2019_040', 'atlas_1704_03848', 'atlas_1911_06660']
+            list_2 = ['atlas_1708_07875', 'atlas_1709_04183', 'atlas_1712_02332', 'atlas_1712_08119', 'atlas_1802_03158']
+            list_3 = ['atlas_1803_02762', 'atlas_1908_03122', 'atlas_1908_08215', 'atlas_1909_08457', 'atlas_1604_01306'] 
+            list_4 = ['atlas_2004_14060', 'atlas_2101_01629', 'atlas_2103_11684', 'atlas_conf_2015_082', 'atlas_1605_09318'] 
+            list_5 = ['atlas_conf_2016_013', 'atlas_conf_2016_050', 'atlas_conf_2016_054', 'atlas_conf_2016_066', 'atlas_conf_2016_076']
+            list_6 = ['atlas_conf_2016_096', 'atlas_conf_2017_060', 'atlas_conf_2018_041', 'atlas_conf_2019_020', 'atlas_1609_01599'] 
+            list_7 = ['atlas_conf_2020_048', 'cms_pas_sus_15_011', 'cms_sus_16_025', 'cms_sus_16_048', 'atlas_1706_03731']
+
+            list_all = list_1 + list_2 + list_3 + list_4 + list_5 + list_6 + list_7
+
+            # GMSB
+            ## 8 TeV analyses
             list8_1 = ['atlas_1308_1841', 'atlas_1308_2631', 'atlas_1402_7029', 'atlas_1403_4853', 'atlas_1403_5222']
             list8_2 = ['atlas_1403_5294', 'atlas_1403_5294_CR', 'atlas_1404_2500', 'atlas_1405_7875', 'atlas_1407_0583']
             list8_3 = ['atlas_1407_0608', 'atlas_1411_1559', 'atlas_1501_07110', 'atlas_1502_01518', 'atlas_1502_05686']
@@ -554,7 +670,8 @@ def plot(var, mode, MODEL, outfolder, SHOW_LHC, SHOW_DM_proj):
             list8_7 = ['cms_sus_13_016']
 
             list8_all = list8_1 + list8_2 + list8_3 + list8_4 + list8_5 + list8_6 + list8_7
-             
+
+            # GMSB             
             print(list(set(ana_list) - set(list_all+list8_all)))
             #if False:
             try:
@@ -570,6 +687,7 @@ def plot(var, mode, MODEL, outfolder, SHOW_LHC, SHOW_DM_proj):
                 print(np.array(x_ar[ana]).shape, np.array(y_ar[ana]).shape, np.array(r_ar[ana]).shape)
                 exit(1)
 
+            # GMSB
             ana_dict = {}
             cols = ['r', 'b', 'purple']
             col_dic = {}
@@ -577,18 +695,21 @@ def plot(var, mode, MODEL, outfolder, SHOW_LHC, SHOW_DM_proj):
             col_dic['cms_sus_16_039'] = 'b' 
             col_dic['atlas_conf_2019_040'] = 'green' 
             col_dic['cms_exo_14_014'] = 'purple' 
+            col_dic['atlas_1911_06660'] = 'magenta'
+            col_dic['atlas_2101_01629'] = 'cyan'
+            col_dic['cms_sus_16_048'] = 'orange'
+            col_dic['cms_sus_16_025'] = 'lime'
+            col_dic['atlas_1712_08119'] = 'k'
 
-            ana_dict['WHL_M2_mL'] = ['atlas_2106_09609', 'cms_sus_16_039']
-            ana_dict['WHL_M2_mu'] = ['atlas_2106_09609', 'cms_sus_16_039', 'atlas_conf_2019_040']
-            #ana_dict['WHL_M2_mu'] = ['atlas_2106_09609', 'cms_sus_16_039']
-            ana_dict['BHL_M1_mL'] = ['cms_exo_14_014', 'cms_sus_16_039']
-            ana_dict['BHL_M1_mu'] = ['atlas_2106_09609', 'cms_sus_16_039', 'cms_exo_14_014']
-            #ana_dict['BLR_mdif20'] = ['atlas_2106_09609', 'cms_sus_16_039', 'atlas_2101_01629']
-            ana_dict['BLR_mdif20'] = ['atlas_2106_09609', 'cms_sus_16_039']
-            ana_dict['BLR_tb10'] = ['cms_exo_14_014']
-            ana_dict['BHR_M1_mR'] = ['cms_exo_14_014', 'cms_sus_16_039']
-            ana_dict['BHR_M1_mu'] = ['atlas_2106_09609', 'cms_sus_16_039']
 
+
+            ana_dict['WHL_M2_mu'] = ['atlas_2101_01629', 'cms_sus_16_039', 'cms_sus_16_048', 'cms_sus_16_025']
+            ana_dict['BHL_M1_mu'] = ['atlas_1712_08119', 'cms_sus_16_039', 'atlas_1911_06660', 'cms_sus_16_048', 'cms_sus_16_025', 'atlas_conf_2019_040', 'atlas_2101_01629']
+            ana_dict['BHR_M1_mu'] = ['cms_sus_16_039', 'atlas_1911_06660']
+            ana_dict['BLR_tb10'] = ['cms_sus_16_039']
+            ana_dict['BLR_tb50'] = ['cms_sus_16_039', 'atlas_1911_06660']
+
+            # GMSB
             ic = -1
             #if False:
             for ana in ana_dict[mode]:                
@@ -600,15 +721,23 @@ def plot(var, mode, MODEL, outfolder, SHOW_LHC, SHOW_DM_proj):
                 ax.tricontour(xar, yar, zar, [1], colors=(col), linewidths=(1.5), zorder=2)
                 ax.tricontourf(xar, yar, zar, [1, infty], colors=(col), alpha=0.3, zorder=1)
 
+            # GMSB
             cols = ['r', 'b', 'g', 'purple', 'magenta']
             ic = -1
             if False:
-            #for ana in list8_6:
+            #for ana in list_2:
                 ic += 1; col = cols[ic]
                 xar, yar, zar = x_ar[ana], y_ar[ana], r_ar[ana]
                 ax.tricontour(xar, yar, zar, [1], colors=(col), linewidths=(1.5), zorder=2)
                 ax.tricontourf(xar, yar, zar, [1, infty], colors=(col), alpha=0.3, zorder=1)
 
+            xdm, ydm = np.loadtxt('WHL_M2_mu_stau_2.grid').transpose()
+            ax.scatter(xdm, ydm)
+
+            # ana = 'atlas_2101_01629'
+            # sc = ax.scatter(x_ar[ana], y_ar[ana], c=r_ar[ana], cmap='tab20c')
+            # plt.colorbar(sc)
+            #plt.show()
 
 
     # if MODEL == 'RPV': #TODO: INCLUDE GMSB WHEN CONSTRAINTS ARE CALCULATED
@@ -718,7 +847,7 @@ if __name__ == '__main__':
     mode = sys.argv[1]
     MODEL = sys.argv[2]
 
-    if MODEL not in ['MSSM','GMSB','RPV']:
+    if MODEL not in ['MSSM','GMSB','RPV', 'GMSB_stau']:
         raise ValueError('Wong MODEL: 2nd argument must be choson from [MSSM, GMSB, RPV]')
 
     outfolder = 'results'

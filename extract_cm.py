@@ -52,7 +52,7 @@ for rootS in energies:
                         continue
                     if ana not in data.keys(): data[ana] = {}
                     # data[ana][sr] = float(s)/float(s95obs)
-                    data[ana][sr] = float(robscons)
+                    data[ana][sr] = {'obs': float(robscons), 'exp': float(rexpcons)}
             result[(model,mode,rootS,x,y)] = data
 
         outfile = '{}_{}_{}TeV.cmres'.format(model, mode, rootS)
@@ -64,11 +64,12 @@ for rootS in energies:
             #if ic > 2: break
             model,mode,rootS,x,y = key
             for ana, data in res.items():
-                sr_best, r_best = '-', 0
+                sr_best_exp, r_best_exp = '-', 0
                 for sr, r in data.items():
-                    if r > r_best:
-                        sr_best, r_best = sr, r
-                outsting = '{}  {}  {}  {}  {}'.format(x, y, ana, sr_best, r_best)
+                    if r['exp'] > r_best:
+                        sr_best_exp, r_best_exp = sr, r['exp']
+                    sr_best_obs = r[sr_best_exp]
+                outsting = '{}  {}  {}  {}  {}'.format(x, y, ana, sr_best_exp, r_best_obs, r_best_exp)
                 fout.write(outsting + '\n')
 
 

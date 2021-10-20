@@ -14,15 +14,14 @@ modes = ['BLR_mdif20',
 		'WHL_M2_mL',
 		'WHL_M2_mu',
 		'BLR_tb10',
-		'BLR_tb50',
 		# 'BLR_tb20',
 		]
 
 #modes = ['BLR_mdif20']
 
 #MODELs = ['MSSM']
-# MODELs = ['RPV']
-MODELs = ['GMSB']
+MODELs = ['RPV']
+#MODELs = ['GMSB']
 
 show_lhc, show_dm_proj = True, False
 
