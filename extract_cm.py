@@ -3,29 +3,34 @@
 import sys, os
 import numpy as np
 
+# model = 'GMSB_stau'
 model = 'RPV'
 # mode = 'WHL_M2_mu'
 # rootS = '13'
 modes = [  
         # 'BLR_mdif20',
-        # 'BHL_M1_mL',
+        'BHL_M1_mL',
         # 'BHL_M1_mu',
         # 'BHR_M1_mR',
         # 'BHR_M1_mu',
         # 'WHL_M2_mL',
         # 'WHL_M2_mu',
         # 'WHL_M2_mu_2',
-    	'BLR_tb10',
-        'BLR_tb50'
+    	# 'BLR_tb10',
+        # 'BLR_tb50'
         ]
 energies = ['13', '8']
 
 for rootS in energies:
     for mode in modes:
         if model == 'GMSB_stau':
-            grid = np.loadtxt('../grids_GMSB_stau/{}.grid'.format(mode))
+            grid_path = '../grids_GMSB_stau/{}.grid'.format(mode)
         else:
-            grid = np.loadtxt('../grids/{}.grid'.format(mode))
+            grid_path = '../grids/{}.grid'.format(mode)
+        if not os.path.exists(grid_path):
+            continue
+
+        grid = np.loadtxt(grid_path)
         ic = 0
         result = {}
         for x, y in grid:
@@ -49,7 +54,7 @@ for rootS in energies:
                 infile = '/mnt/big/g-2_project/RESULTS/{model}/{tag}/evaluation/total_results.txt'.format(model=model, tag=tag)
                 dir_Nsig = '/mnt/big/g-2_project/RESULTS/{model}/{tag}/analysis'.format(model=model, tag=tag)
 
-            if not os.path.isfile(infile):
+            if not os.path.exists(infile):
                 print(infile, ' does not exist')
                 continue
             data = {}    
@@ -82,12 +87,22 @@ for rootS in energies:
                         sr_best_exp, r_best_exp = sr, r['exp']
                     r_best_obs = r['obs']
                 infile = 'process1_{}_signal.dat'.format(ana)
-                for line in open(dir_Nsig + '/' + infile):
-                    elems = line.split()
-                    if len(elems) > 2:
-                        if elems[0] == sr_beest:
-                            nsig_mc = int(elems[1])
-                outsting = '{}  {}  {}  {}  {}  {}'.format(x, y, ana, sr_best_exp, r_best_obs, r_best_exp, nsig_mc)
+                nsig_mc = 0
+                if r_best_exp != '-':
+                    fpath = os.path.join(dir_Nsig, infile)
+                    if os.path.exists(fpath):        
+                        for line in open(fpath):
+                            elems = line.split()
+                            if len(elems) > 2:
+                                # print(elems)
+                                # print(elems[0], sr_best_exp)
+                                if elems[0] == sr_best_exp:
+                                    try:
+                                        nsig_mc = int(float(elems[1]))
+                                    except:
+                                        print(elems)
+                                        print(infile)
+                outsting = '{}  {}  {}  {}  {}  {}  {}'.format(x, y, ana, sr_best_exp, r_best_obs, r_best_exp, nsig_mc)
                 fout.write(outsting + '\n')
 
 
