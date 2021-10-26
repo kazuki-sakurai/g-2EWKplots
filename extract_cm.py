@@ -81,11 +81,13 @@ for rootS in energies:
             #if ic > 2: break
             model,mode,rootS,x,y = key
             for ana, data in res.items():
-                sr_best_exp, r_best_exp = '-', 0
+                sr_best_exp, r_best_exp, r_proper = '-', 0, 0
+                sr_best_obs, r_best_obs = '-', 0                
                 for sr, r in data.items():
                     if r['exp'] > r_best_exp:
-                        sr_best_exp, r_best_exp = sr, r['exp']
-                    r_best_obs = r['obs']
+                        sr_best_exp, r_best_exp, r_proper = sr, r['exp'], r['obs']
+                    if r['obs'] > r_best_obs:
+                        sr_best_obs, r_best_obs = sr, r['obs']
                 infile = 'process1_{}_signal.dat'.format(ana)
                 nsig_mc = 0
                 if r_best_exp != '-':
@@ -102,7 +104,7 @@ for rootS in energies:
                                     except:
                                         print(elems)
                                         print(infile)
-                outsting = '{}  {}  {}  {}  {}  {}  {}'.format(x, y, ana, sr_best_exp, r_best_obs, r_best_exp, nsig_mc)
+                outsting = '{}  {}  {}  {}  {}  {}  {}'.format(x, y, ana, sr_best_exp, r_proper, nsig_mc, r_best_exp, sr_best_obs, r_best_obs)
                 fout.write(outsting + '\n')
 
 
