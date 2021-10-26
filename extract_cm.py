@@ -24,9 +24,11 @@ energies = ['13', '8']
 for rootS in energies:
     for mode in modes:
         if model == 'GMSB_stau':
-            grid_path = '../grids_GMSB_stau/{}.grid'.format(mode)
+            grid_path = '/home/rmaselek/Documents/g-2_checkmate/grids_GMSB_stau/{}.grid'.format(mode)
+            #grid_path = '../grids_GMSB_stau/{}.grid'.format(mode)
         else:
-            grid_path = '../grids/{}.grid'.format(mode)
+            grid_path = '/home/rmaselek/Documents/g-2_checkmate/grids/{}.grid'.format(mode)            
+            #grid_path = '../grids/{}.grid'.format(mode)
         if not os.path.exists(grid_path):
             continue
 
