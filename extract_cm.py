@@ -106,7 +106,7 @@ for rootS in energies:
                                     except:
                                         print(elems)
                                         print(infile)
-                outsting = '{}  {}  {}  {}  {}  {}  {}'.format(x, y, ana, sr_best_exp, r_proper, nsig_mc, r_best_exp, sr_best_obs, r_best_obs)
+                outsting = '{}  {}  {}  {}  {}  {}  {}  {}  {}'.format(x, y, ana, sr_best_exp, r_proper, nsig_mc, r_best_exp, sr_best_obs, r_best_obs)
                 fout.write(outsting + '\n')
 
 
