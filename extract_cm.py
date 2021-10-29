@@ -3,21 +3,21 @@
 import sys, os
 import numpy as np
 
-# model = 'GMSB_stau'
+#model = 'GMSB_stau'
 model = 'RPV'
 # mode = 'WHL_M2_mu'
 # rootS = '13'
 modes = [  
-        # 'BLR_mdif20',
+        'BLR_mdif20',
         'BHL_M1_mL',
-        # 'BHL_M1_mu',
-        # 'BHR_M1_mR',
-        # 'BHR_M1_mu',
-        # 'WHL_M2_mL',
-        # 'WHL_M2_mu',
+        'BHL_M1_mu',
+        'BHR_M1_mR',
+        'BHR_M1_mu',
+        'WHL_M2_mL',
+        'WHL_M2_mu',
         # 'WHL_M2_mu_2',
-    	# 'BLR_tb10',
-        # 'BLR_tb50'
+    	#'BLR_tb10',
+        'BLR_tb50'
         ]
 energies = ['13', '8']
 
@@ -91,15 +91,34 @@ for rootS in energies:
                     if r['obs'] > r_best_obs:
                         sr_best_obs, r_best_obs = sr, r['obs']
                 infile = 'process1_{}_signal.dat'.format(ana)
-                nsig_mc = 0
+                nsig_mc = -1
                 if r_best_exp != '-':
+                    if model == "GMSB_stau":
+                        tag = '{model}-{mode}_stau_{x}_{y}_{rootS}TeV'.format(model=model_dm, mode=mode, x=x, y=y, rootS=rootS)
+                    else:
+                        tag = '{model}-{mode}_{x}_{y}_{rootS}TeV'.format(model=model_dm, mode=mode, x=x, y=y, rootS=rootS)
+                    if mode == 'WHL_M2_mu_2':
+                        tag = 'GMSB_stau-WHL_M2_mu_stau_2_{x}_{y}_{rootS}TeV'.format(x=x, y=y, rootS=rootS)
+                        # infile = '/home/rmaselek/Documents/g-2_checkmate/output/{model}/{tag}/evaluation/total_results.txt'.format(model=model, tag=tag)
+                        dir_Nsig = '/home/rmaselek/Documents/g-2_checkmate/output/{model}/{tag}/analysis'.format(model=model, tag=tag)
+                    else:
+                        # infile = '/mnt/big/g-2_project/RESULTS/{model}/{tag}/evaluation/total_results.txt'.format(model=model, tag=tag)
+                        dir_Nsig = '/mnt/big/g-2_project/RESULTS/{model}/{tag}/analysis'.format(model=model, tag=tag)
+
                     fpath = os.path.join(dir_Nsig, infile)
-                    if os.path.exists(fpath):        
-                        for line in open(fpath):
+                    if x==100 and y==100: print(f"path: {fpath}")
+                    if os.path.exists(fpath):
+                        with open(fpath, 'r') as f:
+                            lines = f.readlines()        
+                        for line in lines:
                             elems = line.split()
                             if len(elems) > 2:
                                 # print(elems)
-                                # print(elems[0], sr_best_exp)
+                                if x==100 and y==100:
+                                    print('*'*50)
+                                    print(line)
+                                    print(elems)
+                                    print(elems[0], elems[1], sr_best_exp, ana)
                                 if elems[0] == sr_best_exp:
                                     try:
                                         nsig_mc = int(float(elems[1]))
