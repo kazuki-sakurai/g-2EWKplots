@@ -494,12 +494,17 @@ def plot(var, mode, MODEL, outfolder, SHOW_LHC, SHOW_DM_proj):
         if MODEL == 'RPV': #TODO: INCLUDE GMSB WHEN CONSTRAINTS ARE CALCULATED
 
             ana_list = set([])
-            cmres, x_ar, y_ar, sr_ar, r_ar = {}, {}, {}, {}, {}
+            cmres, x_ar, y_ar, sr_ar, r_ar, nsig_ar = {}, {}, {}, {}, {}, {}
+            ana_info = {}
             for rootS in ['8', '13']:
 
-                for line in open(f"constraints/RPV_{mode}_{rootS}TeV.cmres"):
-                    xdm, ydm, ana, sr, rval = line.split()
-                    x, y, rval = int(xdm), abs(int(ydm)), float(rval)
+                infile = f"constraints/RPV_{mode}_{rootS}TeV.cmres"        
+#                if mode == 'BHL_M1_mL': 
+#                    infile = f"constraints/sleptonRPV_{mode}_{rootS}TeV.cmres"        
+                print(mode, infile)
+                for line in open(infile):
+                    xdm, ydm, ana, sr, rval, nsig, r_exp, sr_best_obs, r_naive = line.split()
+                    x, y, rval, r_exp, nsig = int(xdm), abs(int(ydm)), float(rval), float(r_exp), float(nsig)
                     #To clean the noise 
                     if PLOT_CLEAN:
                         if mode == 'WHL_M2_mL':
@@ -514,12 +519,18 @@ def plot(var, mode, MODEL, outfolder, SHOW_LHC, SHOW_DM_proj):
                         if mode == 'BHL_M1_mu':
                             if x > 200 and y < 150 and ana == 'atlas_2106_09609': rval = 0 
 
+                    pos = (x, y)
+                    if pos not in ana_info.keys():
+                        ana_info[pos] = {}
+                    ana_info[pos][ana] = rval 
+
                     if ana not in cmres.keys(): 
                         cmres[ana] = {}
                         x_ar[ana] = []
                         y_ar[ana] = []
                         sr_ar[ana] = []
                         r_ar[ana] = []
+                        nsig_ar[ana] = []
                     cmres[ana][(x, y)] = {}
                     cmres[ana][(x, y)][sr] = sr
                     cmres[ana][(x, y)][sr] = rval
@@ -527,6 +538,7 @@ def plot(var, mode, MODEL, outfolder, SHOW_LHC, SHOW_DM_proj):
                     y_ar[ana].append(y)            
                     sr_ar[ana].append(sr)            
                     r_ar[ana].append(rval)            
+                    nsig_ar[ana].append(nsig)            
 
             ana_list = cmres.keys()
 
@@ -584,7 +596,7 @@ def plot(var, mode, MODEL, outfolder, SHOW_LHC, SHOW_DM_proj):
             ana_dict['WHL_M2_mL'] = ['atlas_2106_09609', 'cms_sus_16_039']
             ana_dict['WHL_M2_mu'] = ['atlas_2106_09609', 'cms_sus_16_039', 'atlas_conf_2019_040']
             #ana_dict['WHL_M2_mu'] = ['atlas_2106_09609', 'cms_sus_16_039']
-            ana_dict['BHL_M1_mL'] = ['cms_exo_14_014', 'cms_sus_16_039']
+            ana_dict['BHL_M1_mL'] = ['cms_exo_14_014']
             ana_dict['BHL_M1_mu'] = ['atlas_2106_09609', 'cms_sus_16_039', 'cms_exo_14_014']
             #ana_dict['BLR_mdif20'] = ['atlas_2106_09609', 'cms_sus_16_039', 'atlas_2101_01629']
             ana_dict['BLR_mdif20'] = ['atlas_2106_09609', 'cms_sus_16_039']
@@ -600,15 +612,39 @@ def plot(var, mode, MODEL, outfolder, SHOW_LHC, SHOW_DM_proj):
                 #col = cols[ic]
                 col = col_dic[ana]
                 print(mode, ana, col)
-                xar, yar, zar = x_ar[ana], y_ar[ana], r_ar[ana]
+                xar, yar, zar, nsigar = x_ar[ana], y_ar[ana], r_ar[ana], nsig_ar[ana]
                 ax.tricontour(xar, yar, zar, [1], colors=(col), linewidths=(1.5), zorder=2)
                 ax.tricontourf(xar, yar, zar, [1, infty], colors=(col), alpha=0.3, zorder=1)
+
+                # for ii in range(len(xar)):
+                #     x, y, n = xar[ii], yar[ii], nsigar[ii]
+                #     if xmin <= x and x <= xmax and ymin <= y and y <= ymax:
+                #         fs_1, fc = 2, col
+                #         if n < 10: fs_1, fc = 6, 'r'                        
+                #         ax.text( x, y, '{}'.format(n), color=fc, fontsize=fs_1 )
+
+            for ii in range(len(xar)):
+                x, y = xar[ii], yar[ii]
+                pos = (x, y)
+                anabest, rbest = '-', 0
+                for ana, rval in ana_info[pos].items():
+                    if rval > rbest: 
+                        anabest = ana
+                        rbest = rval
+                n = int(nsig_ar[anabest][ii])
+                r = int(r_ar[anabest][ii])
+                if xmin <= x and x <= xmax and ymin <= y and y <= ymax:
+                    fs_1, fc = 2, col
+                    if n < 10: fs_1, fc = 6, 'r'                        
+                    ax.text( x, y, '{}'.format(r), color=fc, fontsize=fs_1 )
+
+
 
             # RPV
             cols = ['r', 'b', 'g', 'purple', 'magenta']
             ic = -1
-            #if False:
-            for ana in list_1:
+            if False:
+            #for ana in list_1:
                 ic += 1; col = cols[ic]
                 xar, yar, zar = x_ar[ana], y_ar[ana], r_ar[ana]
                 ax.tricontour(xar, yar, zar, [1], colors=(col), linewidths=(1.5), zorder=2)
