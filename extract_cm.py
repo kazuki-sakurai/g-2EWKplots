@@ -15,7 +15,7 @@ modes = [
         'BHR_M1_mu',
         'WHL_M2_mL',
         'WHL_M2_mu',
-        # 'WHL_M2_mu_2',
+        #'WHL_M2_mu_2',
     	#'BLR_tb10',
         'BLR_tb50'
         ]
@@ -64,6 +64,7 @@ for rootS in energies:
                 elems = line.split()
                 if len(elems) == 11:
                     ana, sr, o, b, db, s, ds, s95obs, s95exp, robscons, rexpcons = elems
+                    if ana == 'atlas_2004_10894': continue
                     try: 
                         s = float(s)
                     except:
