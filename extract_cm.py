@@ -3,20 +3,20 @@
 import sys, os
 import numpy as np
 
-#model = 'GMSB_stau'
-model = 'RPV'
+model = 'GMSB_stau'
+# model = 'RPV'
 # mode = 'WHL_M2_mu'
 # rootS = '13'
 modes = [  
-        'BLR_mdif20',
-        'BHL_M1_mL',
+        # 'BLR_mdif20',
+        # 'BHL_M1_mL',
         'BHL_M1_mu',
-        'BHR_M1_mR',
+        # 'BHR_M1_mR',
         'BHR_M1_mu',
-        'WHL_M2_mL',
-        'WHL_M2_mu',
-        #'WHL_M2_mu_2',
-    	#'BLR_tb10',
+        # 'WHL_M2_mL',
+        # 'WHL_M2_mu',
+        'WHL_M2_mu_2',
+    	'BLR_tb10',
         'BLR_tb50'
         ]
 energies = ['13', '8']
@@ -107,7 +107,7 @@ for rootS in energies:
                         dir_Nsig = '/mnt/big/g-2_project/RESULTS/{model}/{tag}/analysis'.format(model=model, tag=tag)
 
                     fpath = os.path.join(dir_Nsig, infile)
-                    if x==100 and y==100: print(f"path: {fpath}")
+                    # if x==100 and y==100: print(f"path: {fpath}")
                     if os.path.exists(fpath):
                         with open(fpath, 'r') as f:
                             lines = f.readlines()        
@@ -115,11 +115,11 @@ for rootS in energies:
                             elems = line.split()
                             if len(elems) > 2:
                                 # print(elems)
-                                if x==100 and y==100:
-                                    print('*'*50)
-                                    print(line)
-                                    print(elems)
-                                    print(elems[0], elems[1], sr_best_exp, ana)
+                                # if x==100 and y==100:
+                                #     print('*'*50)
+                                #     print(line)
+                                #     print(elems)
+                                #     print(elems[0], elems[1], sr_best_exp, ana)
                                 if elems[0] == sr_best_exp:
                                     try:
                                         nsig_mc = int(float(elems[1]))
