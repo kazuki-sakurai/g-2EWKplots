@@ -53,8 +53,13 @@ for rootS in energies:
                 infile = '/home/rmaselek/Documents/g-2_checkmate/output/{model}/{tag}/evaluation/total_results.txt'.format(model=model, tag=tag)
                 dir_Nsig = '/home/rmaselek/Documents/g-2_checkmate/output/{model}/{tag}/analysis'.format(model=model, tag=tag)
             else:
-                infile = '/mnt/big/g-2_project/RESULTS/{model}/{tag}/evaluation/total_results.txt'.format(model=model, tag=tag)
-                dir_Nsig = '/mnt/big/g-2_project/RESULTS/{model}/{tag}/analysis'.format(model=model, tag=tag)
+                if model == 'RPV' and mode == "BHL_M1_mL":
+                    infile = '/mnt/big/g-2_project/RESULTS/RPV_new/{tag}/evaluation/total_results.txt'.format(model=model, tag=tag)
+                    dir_Nsig = '/mnt/big/g-2_project/RESULTS/RPV_new/{tag}/analysis'.format(model=model, tag=tag)
+
+                else:
+                    infile = '/mnt/big/g-2_project/RESULTS/{model}/{tag}/evaluation/total_results.txt'.format(model=model, tag=tag)
+                    dir_Nsig = '/mnt/big/g-2_project/RESULTS/{model}/{tag}/analysis'.format(model=model, tag=tag)
 
             if not os.path.exists(infile):
                 print(infile, ' does not exist')
