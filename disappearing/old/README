@@ -1,0 +1,10 @@
+
+
+     Data written as :
+
+         M1,M2,mu,tanbeta,mL,mR,
+         mse1,mse2,mstau1,mstau2,msne1,
+         mn1,mn2,mn3,mn4,mc1,mc2,delm,tau
+
+
+       Here : delm = mc1-mn1

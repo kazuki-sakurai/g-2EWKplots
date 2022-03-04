@@ -202,6 +202,7 @@ def plot(var, mode, MODEL, outfolder, SHOW_LHC, SHOW_DM_proj):
     elif 'BHL_M1_mu' == mode:
         xmin, xmax = 120, 600
         ymin, ymax = 120, 350
+        #ymin, ymax = 120, 500
         xlab = r'$M_1 \,\,[\rm GeV]$'
         ylab = r'$\mu \,\,[\rm GeV]$'
         scale = ''
@@ -306,11 +307,12 @@ def plot(var, mode, MODEL, outfolder, SHOW_LHC, SHOW_DM_proj):
     zar = [ (am - am_exp)/err_m for am in var['gm2']]
     zar = np.array(zar)
 
-    ax.tricontour(xar, yar, zar, [-2., 2.], linewidths=1, linestyles='--', colors=('k'),  antialiased=True, zorder=0)
-    ax.tricontourf(xar, yar, zar, [-2., -1.], colors=('yellow'),  alpha=0.9,  antialiased=True, zorder=0)
-    ax.tricontourf(xar, yar, zar, [1., 2.], colors=('yellow'),  alpha=0.9,  antialiased=True, zorder=0)
-    ax.tricontourf(xar, yar, zar, [2., infty], colors=('orange'),  alpha=0.4,  antialiased=True, zorder=0)    
-    ax.tricontourf(xar, yar, zar, [-1, 1], colors=('lime'), alpha=0.9,  antialiased=True, zorder=0)
+    zo = -100
+    ax.tricontour(xar, yar, zar, [-2., 2.], linewidths=1, linestyles='--', colors=('k'),  antialiased=True, zorder=-10)
+    ax.tricontourf(xar, yar, zar, [-2., -1.], colors=('yellow'),  alpha=0.9,  antialiased=True, zorder=-10)
+    ax.tricontourf(xar, yar, zar, [1., 2.], colors=('yellow'),  alpha=0.9,  antialiased=True, zorder=-10)
+    ax.tricontourf(xar, yar, zar, [2., infty], colors=('orange'),  alpha=0.4,  antialiased=True, zorder=-10)    
+    ax.tricontourf(xar, yar, zar, [-1, 1], colors=('lime'), alpha=0.9,  antialiased=True, zorder=-10)
     ax.tricontour(xar, yar, zar, [0], linewidths=1.5, linestyles='-', colors=('green'))
     #ax.tricontour(xar, yar, zar, lev, linewidths=1, linestyles='-', colors=('k'))
     
@@ -387,6 +389,7 @@ def plot(var, mode, MODEL, outfolder, SHOW_LHC, SHOW_DM_proj):
 
 
 
+
         ############################################
         # PLOT XENON1T direct detection limit
         ############################################
@@ -444,6 +447,16 @@ def plot(var, mode, MODEL, outfolder, SHOW_LHC, SHOW_DM_proj):
                 ax.tricontour(x, y, c4, lev, zorder=1, alpha=1, linewidths=1.5, linestyles='-', colors=(col),  antialiased=True)
                 ax.tricontourf(x, y, c4, lev, zorder=1, alpha=op, linewidths=1, linestyles='-', colors=(col),  antialiased=True)
 
+
+            # disapearing tracks
+            if mode == 'WHL_M2_mu':
+                col = 'darkorange'
+                xd, yd, zd, dm1, dm2 = np.loadtxt('constraints/DT_{}.dat'.format(mode)).transpose()
+                lev_dt = [0.5, infty]
+                ax.tricontourf(xd, yd, zd, lev_dt, zorder=-1, alpha=0.5, linewidths=1, linestyles='-', colors=(col),  antialiased=True)
+                ax.tricontour(xd, yd, zd, lev_dt, zorder=1, alpha=1, linewidths=1.5, linestyles='-', colors=(col),  antialiased=True)
+
+
             fsdm = 8
             fs = 16
             if mode == 'WHL_M2_mu':
@@ -479,7 +492,7 @@ def plot(var, mode, MODEL, outfolder, SHOW_LHC, SHOW_DM_proj):
 
             if mode == 'BHR_M1_mR':
                 xp, yp = 670, 240 
-                tag = r'${\bf BHR}$' + r'$_R$'
+                tag = r'${\bf BHR}$' + r'$_L$'
                 ax.text(495, 190, 'PandaX-4t', c='green', fontsize=fsdm, rotation=72)
                 ax.text(660, 150, 'LZ, XENONnT', c='darkblue', fontsize=fsdm, rotation=65)
 
@@ -545,10 +558,11 @@ def plot(var, mode, MODEL, outfolder, SHOW_LHC, SHOW_DM_proj):
                 tag = r'${\bf BHR}$' + r'$_\mu$'
             if mode == 'BHR_M1_mR':
                 xp, yp = 670, 240 
-                tag = r'${\bf BHR}$' + r'$_R$'
+                tag = r'${\bf BHR}$' + r'$_L$'
             if 'BLR' in mode:
                 xp, yp = 460, 1100
-                tag = r'${\bf BLR}$' + r'$_{50}$'
+                #if 'mdif20' in mode: tag = r'${\bf BLR}$' + r'$_{50}$'
+                if 'tb10' in mode: tag = r'${\bf BLR}$' + r'$_{10}$'
             ax.text(xp, yp, tag, fontsize=fs)
 
 
@@ -601,7 +615,7 @@ def plot(var, mode, MODEL, outfolder, SHOW_LHC, SHOW_DM_proj):
 
         #######################################
         # PLOT CHECKMATE CONSTRAINTS
-        PLOT_CLEAN = True
+        PLOT_CLEAN = False
         ALL_FLAG = False
         #######################################
         if MODEL == 'RPV': #TODO: INCLUDE GMSB WHEN CONSTRAINTS ARE CALCULATED
@@ -762,8 +776,8 @@ def plot(var, mode, MODEL, outfolder, SHOW_LHC, SHOW_DM_proj):
             # RPV
             cols = ['r', 'b', 'g', 'purple', 'magenta']
             ic = -1
-            if False:
-            #for ana in list_1:
+            #if False:
+            for ana in list_1:
                 ic += 1; col = cols[ic]
                 xar, yar, zar = x_ar[ana], y_ar[ana], r_ar[ana]
                 ax.tricontour(xar, yar, zar, [1], colors=(col), linewidths=(1.5), zorder=2)
@@ -787,7 +801,7 @@ def plot(var, mode, MODEL, outfolder, SHOW_LHC, SHOW_DM_proj):
                 tag = r'${\bf BHR}_{\mu}$'
             if mode == 'BHR_M1_mR':
                 xp, yp = 660, 240
-                tag = r'${\bf BHR}_{R}$'
+                tag = r'${\bf BHR}_{L}$'
             if mode == 'BLR_mdif20':
                 xp, yp = 500, 1110
                 tag = r'${\bf BLR}_{50}$'
@@ -804,18 +818,60 @@ def plot(var, mode, MODEL, outfolder, SHOW_LHC, SHOW_DM_proj):
         if MODEL == 'GMSB_stau': #TODO: INCLUDE GMSB WHEN CONSTRAINTS ARE CALCULATED
         #######################################
 
+            ######################################################
+            ana_info_prev = {}
+            if mode == 'BHL_M1_mu':
+
+                for line in open(f"constraints/GMSB_stau_{mode}_13TeV.cmres_old1"):
+                    xdm, ydm, ana, sr, rval, nsig, r_exp, sr_best_obs, r_naive = line.split()
+                    x, y, rval, r_exp, nsig = int(xdm), abs(int(ydm)), float(rval), float(r_exp), float(nsig) 
+                    if ana == 'cms_exo_14_014': continue
+                    if PLOT_CLEAN:
+                        if mode == 'BHL_M1_mu':
+                            if x > 450 and 170 < y and y < 230 and ana == 'cms_sus_16_025': rval = 0.9
+                            if x < 180 and y > 240 and ana == 'atlas_1911_06660': rval = 0.9
+                    pos = (x, y)
+                    if pos not in ana_info_prev.keys():
+                        ana_info_prev[pos] = {}
+                    ana_info_prev[pos][ana] = rval 
+
+            ana_info_prev2 = {}
+            if mode == 'BHL_M1_mu':
+
+                for line in open(f"constraints/GMSB_stau_{mode}_13TeV_extra1.cmres"):
+                    xdm, ydm, ana, sr, rval, nsig, r_exp, sr_best_obs, r_naive = line.split()
+                    x, y, rval, r_exp, nsig = int(xdm), abs(int(ydm)), float(rval), float(r_exp), float(nsig) 
+                    if ana == 'cms_exo_14_014': continue
+                    if PLOT_CLEAN:
+                        if mode == 'BHL_M1_mu':
+                            if x > 450 and 170 < y and y < 230 and ana == 'cms_sus_16_025': rval = 0.9
+                            if x < 180 and y > 240 and ana == 'atlas_1911_06660': rval = 0.9
+                    pos = (x, y)
+                    if pos not in ana_info_prev2.keys():
+                        ana_info_prev2[pos] = {}
+                    ana_info_prev2[pos][ana] = rval 
+
+            ######################################################
+
             # GMSB
             ana_list = set([])
             cmres, x_ar, y_ar, sr_ar, r_ar, nsig_ar = {}, {}, {}, {}, {}, {}
             ana_info = {}
 
-            for rootS in ['8', '13']:
+            for rootS in ['13']:
 
                 mode1 = mode
                 if mode == 'WHL_M2_mu': mode1 = 'WHL_M2_mu_2'
                 for line in open(f"constraints/GMSB_stau_{mode1}_{rootS}TeV.cmres"):
                     xdm, ydm, ana, sr, rval, nsig, r_exp, sr_best_obs, r_naive = line.split()
                     x, y, rval, r_exp, nsig = int(xdm), abs(int(ydm)), float(rval), float(r_exp), float(nsig) 
+
+                    if mode == 'BHL_M1_mu':
+                        if (x, y) == (158, 325): continue 
+                        if (x, y) == (158, 343): continue 
+                        if (x, y) == (171, 343): continue 
+                        if (x, y) == (184, 343): continue 
+
 
                     if ana == 'cms_exo_14_014': continue
 
@@ -825,7 +881,19 @@ def plot(var, mode, MODEL, outfolder, SHOW_LHC, SHOW_DM_proj):
                             if x > 450 and 170 < y and y < 230 and ana == 'cms_sus_16_025': rval = 0.9
                             if x < 180 and y > 240 and ana == 'atlas_1911_06660': rval = 0.9
 
+
                     pos = (x, y)
+                    if mode == 'BHL_M1_mu':
+                        try: 
+                            rprev = ana_info_prev[pos][ana]
+                            rval = max(rprev, rval)
+                        except: pass
+                        try: 
+                            rprev2 = ana_info_prev2[pos][ana]
+                            rval = max(rprev2, rval)
+                        except: pass
+
+
                     if pos not in ana_info.keys():
                         ana_info[pos] = {}
                     ana_info[pos][ana] = rval 
@@ -896,12 +964,14 @@ def plot(var, mode, MODEL, outfolder, SHOW_LHC, SHOW_DM_proj):
             # atlas_2004_10894 is corrupted
             if ALL_FLAG == True:
                 try:
+                    print('##########################')
                     for ana in list_all:
                         xar, yar, zar = x_ar[ana], y_ar[ana], r_ar[ana]
                         ax.tricontour(xar, yar, zar, [1], linewidths=(1.5), zorder=2, colors=('magenta'))
-                    for ana in list8_all:
-                        xar, yar, zar = x_ar[ana], y_ar[ana], r_ar[ana]
-                        ax.tricontour(xar, yar, zar, [1], linewidths=(1.5), zorder=2, colors=('cyan'))
+                    # for ana in list8_all:
+                    #     if ana == 'atlas_1308_1841': continue
+                    #     xar, yar, zar = x_ar[ana], y_ar[ana], r_ar[ana]
+                    #     ax.tricontour(xar, yar, zar, [1], linewidths=(1.5), zorder=2, colors=('cyan'))
                 except:
                     print(ana)
                     print(ana in x_ar.keys())
@@ -928,7 +998,8 @@ def plot(var, mode, MODEL, outfolder, SHOW_LHC, SHOW_DM_proj):
             #ana_dict['WHL_M2_mu'] = ['cms_sus_16_039', 'cms_sus_16_048', 'cms_sus_16_025']
             ana_dict['WHL_M2_mu'] = ['cms_sus_16_039', 'cms_sus_16_048']
             #ana_dict['BHL_M1_mu'] = ['atlas_1712_08119', 'atlas_1911_06660', 'cms_sus_16_048', 'cms_sus_16_025', 'atlas_conf_2019_040']
-            ana_dict['BHL_M1_mu'] = ['atlas_1712_08119', 'atlas_1911_06660', 'cms_sus_16_048', 'atlas_conf_2019_040']
+            #ana_dict['BHL_M1_mu'] = ['atlas_1712_08119', 'atlas_1911_06660', 'cms_sus_16_048', 'atlas_conf_2019_040']
+            ana_dict['BHL_M1_mu'] = ['atlas_1712_08119', 'atlas_1911_06660', 'atlas_conf_2019_040', 'cms_sus_16_039']
             ana_dict['BHR_M1_mu'] = ['cms_sus_16_039', 'atlas_1911_06660']
             ana_dict['BLR_tb10'] = ['cms_sus_16_039']
             ana_dict['BLR_tb50'] = ['cms_sus_16_039', 'atlas_1911_06660']
@@ -947,7 +1018,7 @@ def plot(var, mode, MODEL, outfolder, SHOW_LHC, SHOW_DM_proj):
                 if col in ['cyan', 'orange']: op = 0.5
                 ax.tricontourf(xar, yar, zar, [1, infty], colors=(col), alpha=op, zorder=1)
 
-            if ALL_FLAG == True:
+            if False:
                 for ii in range(len(xar)):
                     x, y = xar[ii], yar[ii]
                     pos = (x, y)
@@ -971,7 +1042,7 @@ def plot(var, mode, MODEL, outfolder, SHOW_LHC, SHOW_DM_proj):
             cols = ['r', 'b', 'g', 'purple', 'magenta']
             ic = -1
             if False:
-            #for ana in list_2:
+            #for ana in list_1:
                 ic += 1; col = cols[ic]
                 xar, yar, zar = x_ar[ana], y_ar[ana], r_ar[ana]
                 ax.tricontour(xar, yar, zar, [1], colors=(col), linewidths=(1.5), zorder=2)
